@@ -1,56 +1,60 @@
-Projekt 1 – Task Manager
+#  Projekt 1 – Task Manager
 
-Engeto Python Akademie
+Tento projekt je jednoduchý konzolový správce úkolů.  
+Umožňuje přidávat, zobrazovat a mazat úkoly pomocí hlavního menu.  
 
-1. Popis projektu
 
-Projekt implementuje jednoduchý správce úkolů ovládaný z konzole.
-Uživatel může úkoly přidávat, zobrazovat a mazat. Program pracuje se seznamem úkolů uloženým v paměti.
+---
 
-Součástí projektu je také sada testovacích scénářů, které ověřují správné fungování jednotlivých funkcí.
+##  Funkcionalita
 
-2. Funkce programu
-hlavni_menu()
+### 1️⃣ hlavni_menu()
+- Zobrazí nabídku:
+  - 1 – Přidat úkol  
+  - 2 – Zobrazit úkoly  
+  - 3 – Odstranit úkol  
+  - 4 – Ukončit program  
+- Kontroluje, zda uživatel zadal platnou volbu.
 
-zobrazuje nabídku možností
+---
 
-validuje uživatelský vstup
+### 2️⃣ pridat_ukol()
+- Uživatel zadává:
+  - název úkolu (povinný)
+  - popis úkolu (povinný)
+- Úkol je uložen jako slovník do seznamu `ukoly`.
+- Funkce vrací přidaný úkol.
 
-volá odpovídající funkce podle volby
+---
 
-pridat_ukol()
+### 3️⃣ zobrazit_ukoly()
+- Vypíše všechny uložené úkoly.
+- Pokud je seznam prázdný, zobrazí odpovídající informaci.
 
-přidání nového úkolu
+---
 
-kontrola neprázdného názvu i popisu
+### 4️⃣ odstranit_ukol()
+- Uživatel zadá číslo úkolu pro odstranění.
+- Funkce kontroluje platnost indexu.
+- Pokud je číslo správné, úkol je odstraněn.
 
-zobrazit_ukoly()
+---
 
-výpis všech uložených úkolů
+##  Testovací scénáře
+Součástí projektu je dokument **Projekt_1-Test_Cases.docx**, který obsahuje:
 
-informace o jejich pořadí, názvu a popisu
+- pozitivní testy  
+- negativní testy  
+- hraniční případy  
 
-odstranit_ukol()
+Testy ověřují správnou funkčnost všech čtyř funkcí projektu.
 
-odstranění úkolu dle čísla v seznamu
+---
 
-kontrola platného vstupu
+## ▶️ Spuštění programu
 
-3. Testovací scénáře
+V terminálu spusť:
 
-Projekt obsahuje testovací případy pokrývající:
-
-pozitivní scénáře (správné vstupy)
-
-negativní scénáře (neplatné vstupy, prázdné řetězce apod.)
-
-hraniční hodnoty (poslední/ první úkol, prázdný seznam)
-
-Testy ověřují, že program reaguje správně na různé uživatelské volby a vstupy.
-
-4. Spuštění programu
+```bash
 python Projekt_1-Task_Manager.py
 
-5. Autor
-
-Renata Filáková
