@@ -1,64 +1,70 @@
-# Projekt: Task Manager
+from typing import List, Dict, Optional
 
-# Seznam úkolů (globální proměnná)
-ukoly = []
+ukoly: List[Dict[str, str]] = []
 
-def pridat_ukol():
-    """Funkce pro přidání nového úkolu do seznamu."""
+
+def pridat_ukol(nazev: Optional[str] = None, popis: Optional[str] = None) -> int:
     while True:
-        nazev = input("Zadejte název úkolu: ").strip()
+        if nazev is None:
+            nazev = input("Zadejte název úkolu: ").strip()
         if not nazev:
             print(" Chyba: Název úkolu nesmí být prázdný. Zkuste to znovu.\n")
+            nazev = None
             continue
-        popis = input("Zadejte popis úkolu: ").strip()
+
+        if popis is None:
+            popis = input("Zadejte popis úkolu: ").strip()
         if not popis:
             print(" Chyba: Popis úkolu nesmí být prázdný. Zkuste to znovu.\n")
+            popis = None
             continue
-        ukoly.append({"název": nazev, "popis": popis})
+
+        ukoly.append({"nazev": nazev, "popis": popis})
+        idx = len(ukoly)
         print(f" Úkol '{nazev}' byl úspěšně přidán.\n")
-        break
+        return idx
 
 
-def zobrazit_ukoly():
-    """Funkce pro zobrazení všech uložených úkolů."""
+def zobrazit_ukoly() -> None:
     if not ukoly:
         print(" Seznam úkolů je prázdný.\n")
-    else:
-        print(" Seznam úkolů:")
-        for i, ukol in enumerate(ukoly, start=1):
-            print(f"{i}. {ukol['název']} – {ukol['popis']}")
-        print()
-
-
-def odstranit_ukol():
-    """Funkce pro odstranění vybraného úkolu."""
-    if not ukoly:
-        print(" Není co odstraňovat – seznam úkolů je prázdný.\n")
         return
 
-    zobrazit_ukoly()
-    while True:
-        try:
-            cislo = int(input("Zadejte číslo úkolu, který chcete odstranit: "))
-            if 1 <= cislo <= len(ukoly):
-                odstraneny = ukoly.pop(cislo - 1)
-                print(f" Úkol '{odstraneny['název']}' byl odstraněn.\n")
-                break
-            else:
-                print(" Neplatné číslo úkolu. Zadejte číslo znovu.\n")
-        except ValueError:
-            print(" Chyba: Zadejte platné číslo.\n")
+    print("\nÚKOLY:")
+    for i, ukol in enumerate(ukoly, start=1):
+        print(f" {i}. {ukol['nazev']} – {ukol['popis']}")
+    print("")
 
 
-def hlavni_menu():
-    """Hlavní menu programu Task Manager."""
+def odstranit_ukol(index: Optional[int] = None) -> bool:
+    if not ukoly:
+        print(" Seznam úkolů je prázdný, není co odstranit.\n")
+        return False
+
     while True:
-        print("Správce úkolů - Hlavní menu")
-        print("1 – Přidat nový úkol")
-        print("2 – Zobrazit všechny úkoly")
-        print("3 – Odstranit úkol")
-        print("4 – Konec programu")
-       
+        if index is None:
+            vstup = input("Zadejte číslo úkolu k odstranění: ").strip()
+            if not vstup.isdigit():
+                print(" Zadejte prosím platné číslo.\n")
+                continue
+            index = int(vstup)
+
+        if index < 1 or index > len(ukoly):
+            print(" Úkol s tímto číslem neexistuje.\n")
+            return False
+
+        odstraneny = ukoly.pop(index - 1)
+        print(f" Úkol '{odstraneny['nazev']}' byl odstraněn.\n")
+        return True
+
+
+def hlavni_menu() -> None:
+    while True:
+        print("=== Task Manager ===")
+        print("1. Přidat úkol")
+        print("2. Zobrazit úkoly")
+        print("3. Odstranit úkol")
+        print("4. Ukončit program")
 
         volba = input("Vyberte možnost (1–4): ").strip()
 
@@ -75,11 +81,8 @@ def hlavni_menu():
             print(" Neplatná volba. Zadejte prosím číslo 1–4.\n")
 
 
-# Spuštění programu
 if __name__ == "__main__":
-    hlavni_menu()
-
-
-
-
-
+    try:
+        hlavni_menu()
+    except KeyboardInterrupt:
+        print("\nProgram ukončen uživatelem.")
